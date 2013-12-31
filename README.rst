@@ -57,4 +57,4 @@ Afterwards, invoke the following command:
 
 .. sourcecode:: sh
 
-    (venv)$ py pinbot.py -c config.yml
+    (venv)$ python pinbot.py -c config.yml
