@@ -1,9 +1,7 @@
 PinBot
 ~~~~~~
 
-It began when **Fellowship of The PythonID** discussed about having extra bot.
-
-.. image:: convo.png
+It began when **The Fellowship of The PythonID** `discussed <https://botbot.me/freenode/python-id/msg/8935959/>`_ about having extra bot.
 
 Requirements
 ============
