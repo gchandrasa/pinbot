@@ -26,33 +26,42 @@ Create a file to store all required configuration:
 
     # config.yml
     IRC:
-        servers: irc.example.com:6667
-        nick: __pinbot__
-        user: pinbot
-        # password: testing
-        realname: "__pinbot__"
-        auto_ping: 300
+      servers: irc.example.com:6667
+      nick: __pinbot__
+      user: pinbot
+      # password: testing
+      realname: "__pinbot__"
+      auto_ping: 300
 
     triggers:
-        prefix: "."
+      prefix: "."
 
     components.load:
-        - nickserv
-        - /components.db
+      - nickserv
+      - /pinbot.components.db
+      - /pinbot.components.acl
 
     plugins:
-        base: plugins
-        load: remember
+      base: plugins
+      load: /pinbot.plugins.remember
 
     channels:
-        autojoin:
-            - "#pinbot"
+      autojoin:
+        - "#pinbot"
 
     db:
-        url: sqlite:///var/pinbot.db
+      url: sqlite:///var/botpy.db
+
+    acl:
+      permissions:
+        "#pinbot":
+          remember:
+            allow:
+              - kusut
+              - iromli
 
 Afterwards, invoke the following command:
 
 .. sourcecode:: sh
 
-    (venv)$ python pinbot.py -c config.yml
+    (venv)$ PYTHONPATH=. python -m pinbot -c config.yml

@@ -12,6 +12,8 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import UniqueConstraint
 
+from ..components.acl import icanhaz
+
 #: a base model that should be inherited by all submodels,
 #: in order to be mapped into SQLAlchemy session automatically
 Model = declarative_base()
@@ -33,6 +35,7 @@ class Remember(Model):
     content = Column(Text)
 
 
+@icanhaz
 @keyword("remember")
 def remember(ctx, msg, trigger, args, kwargs):
     """Remembers a thing.
@@ -73,6 +76,7 @@ def remember(ctx, msg, trigger, args, kwargs):
             msg.reply(out)
 
 
+@icanhaz
 @keyword("whatis")
 def what(ctx, msg, trigger, args, kwargs):
     """Finds a thing.
@@ -102,6 +106,7 @@ def what(ctx, msg, trigger, args, kwargs):
         msg.reply(out)
 
 
+@icanhaz
 @keyword("tell")
 def tell(ctx, msg, trigger, args, kwargs):
     """Finds a thing.
@@ -140,6 +145,7 @@ def tell(ctx, msg, trigger, args, kwargs):
         msg.reply(out)
 
 
+@icanhaz
 @keyword("forget")
 def forget(ctx, msg, trigger, args, kwargs):
     """Forgets a thing.
