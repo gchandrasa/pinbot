@@ -9,14 +9,10 @@ from sqlalchemy import (
     Text,
 )
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import UniqueConstraint
 
 from ..components.acl import icanhaz
-
-#: a base model that should be inherited by all submodels,
-#: in order to be mapped into SQLAlchemy session automatically
-Model = declarative_base()
+from ..components.db import Model
 
 
 class Remember(Model):
@@ -42,7 +38,7 @@ def remember(ctx, msg, trigger, args, kwargs):
 
     Example::
 
-        !remember foobar is a madeup name
+        <prefix>remember foobar is a madeup name
 
     Given the syntax above, things you need to know:
 
@@ -51,6 +47,7 @@ def remember(ctx, msg, trigger, args, kwargs):
     3. the second word **must** use `is`, otherwise the syntax is incorrect
     4. the rest of the words is the content of a keyword
     """
+
     if len(args) > 2 and args[1] == "is":
         nick = msg.nick
         slug = args[0]
@@ -84,13 +81,14 @@ def what(ctx, msg, trigger, args, kwargs):
     Let's say a user with `janedoe` needs to know about `foobar` thing,
     the appropriate syntax would be::
 
-        !whatis foobar
+        <prefix>whatis foobar
 
     Given the syntax above, things you need to know:
 
     1. the bot requires exactly 1 word (``!whatis`` is omitted)
     2. the only recognized word **must not** use any whitespace character
     """
+
     if len(args) == 1:
         slug = args[0]
         channel = msg.channel
@@ -118,7 +116,7 @@ def tell(ctx, msg, trigger, args, kwargs):
     another user with `johndoe` nickname about `foobar` thing,
     the appropriate syntax would be::
 
-        !tell johndoe about foobar
+        <prefix>tell johndoe about foobar
 
     Given the syntax above, things you need to know:
 
@@ -127,6 +125,7 @@ def tell(ctx, msg, trigger, args, kwargs):
     3. the second word **must** use `about`, otherwise the syntax is incorrect
     4. the last word is a keyword stored in database backend
     """
+
     if len(args) == 3 and args[1] == "about":
         slug = args[2]
         channel = msg.channel
@@ -152,8 +151,9 @@ def forget(ctx, msg, trigger, args, kwargs):
 
     Example::
 
-        !forget foobar
+        <prefix>forget foobar
     """
+
     if len(args) == 1:
         slug = args[0]
         channel = msg.channel
