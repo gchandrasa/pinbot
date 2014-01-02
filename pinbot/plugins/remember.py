@@ -10,6 +10,7 @@ from sqlalchemy.schema import UniqueConstraint
 
 from ..components.acl import icanhaz
 from ..components.db import Model
+from ..utils import hint
 
 
 class Remember(Model):
@@ -29,6 +30,10 @@ class Remember(Model):
 
 
 @icanhaz
+@hint(
+    "remembers a thing | "
+    "usage: {{prefix}}{{trigger}} <keyword> is <contents>"
+)
 @keyword("remember")
 def remember(ctx, msg, trigger, args, kwargs):
     """Remembers a thing.
@@ -39,7 +44,7 @@ def remember(ctx, msg, trigger, args, kwargs):
 
     Given the syntax above, things you need to know:
 
-    1. the bot requires 3 words or more (``!remember`` is omitted)
+    1. the bot requires 3 words or more (``<prefix>remember`` is omitted)
     2. the first word is a keyword
     3. the second word **must** use `is`, otherwise the syntax is incorrect
     4. the rest of the words is the content of a keyword
@@ -71,6 +76,10 @@ def remember(ctx, msg, trigger, args, kwargs):
 
 
 @icanhaz
+@hint(
+    "finds a thing | "
+    "usage: {{prefix}}{{trigger}} <keyword>"
+)
 @keyword("whatis")
 def what(ctx, msg, trigger, args, kwargs):
     """Finds a thing.
@@ -82,7 +91,7 @@ def what(ctx, msg, trigger, args, kwargs):
 
     Given the syntax above, things you need to know:
 
-    1. the bot requires exactly 1 word (``!whatis`` is omitted)
+    1. the bot requires exactly 1 word (``<prefix>whatis`` is omitted)
     2. the only recognized word **must not** use any whitespace character
     """
 
@@ -102,6 +111,10 @@ def what(ctx, msg, trigger, args, kwargs):
 
 
 @icanhaz
+@hint(
+    "finds a thing and let another user knows it | "
+    "usage: {{prefix}}{{trigger}} <nick> about <keyword>"
+)
 @keyword("tell")
 def tell(ctx, msg, trigger, args, kwargs):
     """Finds a thing.
@@ -117,7 +130,7 @@ def tell(ctx, msg, trigger, args, kwargs):
 
     Given the syntax above, things you need to know:
 
-    1. the bot requires exactly 3 words (``!tell`` is omitted)
+    1. the bot requires exactly 3 words (``<prefix>tell`` is omitted)
     2. the first word is user's nickname
     3. the second word **must** use `about`, otherwise the syntax is incorrect
     4. the last word is a keyword stored in database backend
@@ -142,6 +155,10 @@ def tell(ctx, msg, trigger, args, kwargs):
 
 
 @icanhaz
+@hint(
+    "forgets a thing | "
+    "usage: {{prefix}}{{trigger}} <keyword>"
+)
 @keyword("forget")
 def forget(ctx, msg, trigger, args, kwargs):
     """Forgets a thing.

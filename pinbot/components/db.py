@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from pyaib.components import component_class
 from pyaib.plugins import observe
 from sqlalchemy import create_engine
