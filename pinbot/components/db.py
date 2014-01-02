@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 from pyaib.components import component_class
+from pyaib.plugins import observe
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -16,3 +17,10 @@ class Database(object):
         self.engine = create_engine(config["url"])
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
+
+
+@observe("IRC_ONCONNECT")
+def register_models(ctx):
+    """Registers all classes that inherit base ``Model`` class.
+    """
+    Model.metadata.create_all(ctx.db.engine)

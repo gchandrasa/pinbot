@@ -1,7 +1,4 @@
-from pyaib.plugins import (
-    keyword,
-    observe,
-)
+from pyaib.plugins import keyword
 from sqlalchemy import (
     Column,
     Integer,
@@ -165,10 +162,3 @@ def forget(ctx, msg, trigger, args, kwargs):
         # no matter the row is successfully deleted or not,
         # this always be executed
         msg.reply("ok")
-
-
-@observe("IRC_ONCONNECT")
-def register_models(ctx):
-    """Registers all classes that inherit base ``Model`` class.
-    """
-    Model.metadata.create_all(ctx.db.engine)
