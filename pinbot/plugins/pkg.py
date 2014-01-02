@@ -8,7 +8,7 @@ REMOTES = {
     "bitbucket": "https://bitbucket.org/repo/all/relevance?name={pkg}&language=python",  # NOQA
 }
 
-DEFAULT_REMOTE = REMOTES["pypi"]
+DEFAULT_REMOTE_URL = REMOTES["pypi"]
 REMOTE_KEYS_STR = "|".join(REMOTES.keys())
 
 
@@ -23,7 +23,7 @@ def search(ctx, msg, trigger, args, kwargs):
 
     if len(args) == 1:
         remote = kwargs.get("remote")
-        remote_url = REMOTES.get(remote, DEFAULT_REMOTE)
+        remote_url = REMOTES.get(remote, DEFAULT_REMOTE_URL)
         msg.reply("please have a look at {0}".format(
             remote_url.format(pkg=args[0])
         ))
