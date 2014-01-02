@@ -18,6 +18,9 @@ REMOTE_KEYS_STR = "|".join(REMOTES.keys())
 )
 @keyword("pkg")
 def search(ctx, msg, trigger, args, kwargs):
+    """Finds a python package.
+    """
+
     if len(args) == 1:
         remote = kwargs.get("remote")
         remote_url = REMOTES.get(remote, DEFAULT_REMOTE)
