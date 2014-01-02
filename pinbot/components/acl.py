@@ -12,16 +12,19 @@ class ACL(object):
         channel = self.permissions.get(chan, {})
         cmd = channel.get(trigger, {})
 
-        # allows nick in `allow` list
-        if nick in set(cmd.get("allow", [])):
-            return True
-
-        # denies nick in `deny` list
-        if nick in set(cmd.get("deny", [])):
+        # denies nick in `deny` list then bail out
+        # `deny` is the main priority here
+        denied_nicks = set(cmd.get("deny", []))
+        if "*" in denied_nicks or nick in denied_nicks:
             return False
 
-        # default to allows all nicks
-        return True
+        # allows nick in `allow` list
+        allowed_nicks = set(cmd.get("allow", []))
+        if "*" in allowed_nicks or nick in allowed_nicks:
+            return True
+
+        # default to deny all nicks if trigger is specified
+        return False if cmd else True
 
 
 def icanhaz(func):
